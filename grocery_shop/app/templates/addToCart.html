@@ -1,0 +1,92 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+    
+  {% block content %}
+
+  {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h2>Add To Cart</h2>
+          <form method="POST" action="{% url 'add_to_cart' %}">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="product">Product</label>
+              <select class="form-control" id="product" name="product" required>
+                <option value="">Select Product</option>
+                {% for stock in stocks %}
+                  <option value="{{ stock.product.pk }}">{{ stock.product.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="quantity">Quantity</label>
+              <input type="number" class="form-control" id="quantity" min="1" name="quantity" required>
+            </div>
+          
+           
+            
+            <button type="submit" class="btn btn-primary">Add To Cart</button>
+          </form>
+          
+          <span style="font-weight: 500;  color: red;"> {{qty_error_message}}</span> 
+        </div>
+        <div class="col-md-6">
+            <h2>Products in Cart</h2>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Quantity</th>
+                 <th>Total Amount</th>
+                  <th>action</th>
+                </tr>
+              </thead>
+              <tbody>
+          
+                {% for cart in carts %}
+                  <tr>
+                    <td>{{ cart.product.name }}</td>
+                    <td>{{ cart.quantity }}</td>
+                    <td>{{ cart.total_amount }}</td>
+                    
+                    <td>
+                      <a href="{% url 'remove_product_from_cart' cart.id %}" ><button class="btn-danger btn-sm mb-2">remove</button></a>
+                    </td>
+                  </tr>
+                 
+                {% empty %}
+                  <tr>
+                    <td colspan="5">Cart is empty</td>
+                  </tr>
+                
+                  {% endfor %}
+           
+              </tbody>
+            </table>
+         
+            <hr> 
+            
+            <span style="font-weight: bolder; "  > Grand Total: {{net_amount}} </span>
+            <a href="/checkout"  style="margin-left: 55%;" > <button  type="button" class="btn btn-success" {% if empty %}disabled{% endif %}>Checkout</button></a>
+ 
+            
+            
+          </div>
+        </div>
+      </div>
+    {% endblock %}
+  
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  </body>
+  </html>

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+
+    <div class="col-md-8">
+        <h1>Venders</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Phone</th>
+                    <!-- <th>Email</th> -->
+                    <th>action</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                {% for vender in venders %}
+                    <tr>
+                        <td>{{ vender.name }}</td>
+                        <td>{{ vender.address }}</td>
+                        <td>{{ vender.phone_number }}</td>
+                        <!-- <td>{{ vender.email }}</td> -->
+                        <td> 
+                            <a href="{% url 'delete_vender' vender.id %}" ><button class="btn-danger btn-sm mb-2">delete</button></a>
+                            <a href="{% url 'update_vender' vender.id %}"><button class="btn-info btn-sm mb-2">update</button></a>
+                          </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="/vender/add/">
+            <button class="btn btn-primary">add another vender</button>
+        </a>
+    </div>
+</div>
+
+
+
+{% endblock content %}

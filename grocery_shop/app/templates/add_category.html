@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <h2>Add Category</h2>
+      <form method="POST" action="{% url 'add_category' %}">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="categoryName">Category Name</label>
+          <input type="text" class="form-control" id="categoryName" name="name" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Category</button>
+      </form>
+    </div>
+
+    <div class="col-md-4">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Categories</th>
+            <th>action</th>
+          </tr>
+        <tbody>
+          {% for category in categories %}
+          <tr>
+            
+              <td>{{ category.name }}</td>
+              <td>
+
+                <a href="{% url 'delete-category' category.id %}"><button class="btn-danger btn-sm ">delete</button></a>
+                <a href="{% url 'update-category' category.id %}"><button class="btn-info btn-sm ">update</button></a>
+              </td>
+            
+          </tr>
+          {% endfor %}
+        </tbody>
+        </thead>
+
+      </table>
+      <!-- <h2>Categories</h2>
+        <ul class="list-group">
+          {% for category in categories %}
+            <li class="list-group-item">{{ category.name }}</li>
+           
+          {% empty %}
+            <li class="list-group-item">No categories found.</li>
+          {% endfor %}
+        </ul> -->
+    </div>
+  </div>
+</div>
+{% endblock %}
+</body>
+</html>

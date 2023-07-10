@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+
+    <div class="col-md-8">
+        <h3>Available Stock</h3>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Product Name</th>                    
+                    <th>Available Qty.</th>
+                    <th>action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stock in stock_items %}
+                    <tr>
+                        <td>{{ stock.product.name }}</td>
+                       
+                        
+                        <td>{{ stock.qty_left }}</td>
+                        <td>
+                            <a href="{% url 'delete-stock' stock.id %}" ><button class="btn-danger btn-sm mb-2">delete</button></a>
+                            <a href="{% url 'update-stock' stock.id %}"><button class="btn-info btn-sm mb-2">update</button></a>
+                          </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                      <td colspan="5">No stock found.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        
+    </div>
+</div>
+
+
+
+{% endblock content %}

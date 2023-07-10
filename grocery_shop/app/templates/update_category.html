@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <h2>Update Category</h2>
+      <form method="POST" action="{% url 'update-category' id=id %}">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="categoryName">Category Name</label>
+          <input type="text" class="form-control" id="categoryName" name="name" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Category</button>
+      </form>
+    </div>
+    </div>
+  </div>
+
+{% endblock %}

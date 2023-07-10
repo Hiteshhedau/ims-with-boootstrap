@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <div>
+    <div class="row">
+      <div class="col-md-6">
+        <h2>Add Sale</h2>
+        <form method="POST" action="{% url 'add_sale' %}">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="product">Product</label>
+            <select class="form-control" id="product" name="product" required>
+              <option value="">Select Product</option>
+              {% for product in products %}
+
+                <option value="{{ product.pk }}">{{ product.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="quantity">Quantity</label>
+            <input type="number" class="form-control" id="quantity" name="quantity" required>
+          </div>
+          
+          <button type="submit" class="btn btn-primary">Add to cart</button>
+        </form>
+
+       
+        {% if error_message %}
+          <div class="alert alert-danger mt-3">
+            {{ error_message }}
+          </div>
+        {% endif %}
+      </div>
+      <div class="col-md-6">
+        <h2>Items in cart</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th>Total Amount</th>
+              <th>action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for sale in sales %}
+                <tr>
+                    <td>{{ sale.product.name }}</td>
+                    <td>{{ sale.quantity }}</td>
+                    <td>{{sale.product.price}}</td> 
+                    <td>{{sale.total_amt}}</td>
+                    <td>
+                      <a href="{% url 'sale-delete' sale.id %}" ><button class="btn-danger btn-sm mb-2">remove</button></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <hr>
+    {% for sale in sales %}
+    
+    {% endfor %}
+    <hr>
+    
+    {% endblock content %}

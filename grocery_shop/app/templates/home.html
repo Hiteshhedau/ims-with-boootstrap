@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 style="font-style: italic;font-weight: bold;text-align: center; color:coral;" >Inventory Management System</h2>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 offset-md-7 mt-5">
+      
+          <div class="table-responsive">
+        <h3>Available Stock</h3>
+
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Product Name</th>
+                  <th>Quantity</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for stock in stocks %}
+                  <tr>
+                    <td>{{ stock.product.name }}</td>
+                    <td>{{ stock.qty_left }}</td>
+                    <td>
+                      {% if stock in low_stock_products %}
+                        <span style="color: red;">Low Stock</span>
+                      {% else %}
+                      <span style="color: green;"> Sufficient Stock</span>  
+                      {% endif %}
+                    </td>
+                  </tr>
+                  {% empty %}
+                  <tr>
+                    <td colspan="5">No stock found.</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>    
+    </div>
+  </div>
+
+{% endblock content %}
+
+
+
+

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+
+    <div class="col-md-8">
+        <h1>Products</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.price }}</td>
+                    <td>
+                        <a href="{% url 'product-delete' product.id %}"><button
+                                class="btn-danger btn-sm mb-2">delete</button></a>
+                        <a href="{% url 'product-update' product.id %}"><button
+                                class="btn-info btn-sm mb-2">update</button></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="/products/add/">
+            <button class="btn btn-primary">add another product</button>
+        </a>
+    </div>
+</div>
+{% endblock content %}

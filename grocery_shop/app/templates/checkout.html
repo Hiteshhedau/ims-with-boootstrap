@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+<div class="container col-md-6">
+    <h1>Checkout</h1>
+    <form  method="POST" action="{% url 'add_sale' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="customer">Customer</label>
+            <select class="form-control" id="customer" name="customer" required>
+              <option value="">Select Customer</option>
+              {% for customer in customers %}
+                <option value="{{ customer.pk }}">{{ customer.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+      <div class="form-group">
+        <label for="payment-mode">Payment Mode</label>
+        <select class="form-control" id="payment-mode">
+          <option value="">Select payment mode</option>
+          <option value="credit-card">Credit Card</option>
+          <option value="debit-card">Debit Card</option>
+          <option value="paypal">PayPal</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">proceed to sell</button>  
+      <a href="/carts/add/"> <button type="button" class="btn btn-warning">back to cart</button></a>
+    </form>
+  </div>
+  <div class="col-md-6">
+    <h2>Products in Cart</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Quantity</th>
+         <th>Total Amount</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+  
+        {% for cart in carts %}
+          <tr>
+            <td>{{ cart.product.name }}</td>
+            <td>{{ cart.quantity }}</td>
+            <td>{{ cart.total_amount }}</td>
+            
+           
+          </tr>
+         
+        {% empty %}
+          <tr>
+            <td colspan="5">Cart is empty</td>
+          </tr>
+        {% endfor %}
+       
+       
+        
+         
+      </tbody>
+    </table>
+<div>
+
+   <span style="font-weight: bold;">Grand Total:  {{net_amount}} </span> 
+</div>
+</div>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  {% endblock %}
